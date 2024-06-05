@@ -1,0 +1,1 @@
+export const BACKEND_URL="https://backend.kartikturak1.workers.dev";
