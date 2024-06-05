@@ -39,9 +39,7 @@ userRouter.post('/signup', async (c) => {
   
       const token = await sign({ id: user.id }, c.env.JWT_SECRET)
   
-      return c.json({
-        token
-      })
+      return c.json( {token} );
     } catch (error) {
       c.status(403);
       return c.json({ error: "error while signup" })
