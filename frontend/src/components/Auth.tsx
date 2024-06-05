@@ -8,20 +8,20 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
 
     const [postInputs, setPostInputs] = useState<SignupInput>({
         name: "",
-        email: "",
+        email: "", 
         password: ""
     });
     const navigate = useNavigate();
 
     async function sendRequest(){
         try {
-            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type==="signin"?"signin":"signup"}`,postInputs)
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
             const jwt = response.data;
-            // console.log(jwt);
-            localStorage.setItem("token",jwt.jwt)
-            navigate("/blogs")
-        } catch (error) {
-            alert("request failed")
+            localStorage.setItem("token", jwt);
+            navigate("/blogs");
+        } catch(e) {
+            alert("Error while signing up")
+            // alert the user here that the request failed
         }
     }
 

@@ -66,7 +66,7 @@ userRouter.post('/signup', async (c) => {
           email: body.email,
           password: body.password
         }
-      });
+      }); 
   
       if (!user) {
         c.status(403);
