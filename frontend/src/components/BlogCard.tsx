@@ -4,7 +4,7 @@ interface BlogCardProps {
     authorName: string;
     title: string;
     content: string;
-    publishedData: string;
+    publishedDate: string;
     id:string
 }
 
@@ -12,7 +12,7 @@ export const BlogCard = ({
     authorName,
     title,
     content,
-    publishedData,
+    publishedDate,
     id
 }: BlogCardProps) => {
     return <>
@@ -31,7 +31,7 @@ export const BlogCard = ({
                         <Cirlce></Cirlce>
                     </div>
                     <div className="pl-2 font-thin text-slate-400 text-sm flex justify-center flex-col">
-                        {publishedData}
+                        {publishedDate}
                     </div>
                 </div>
                 <div className="text-xl font-semibold py-2">

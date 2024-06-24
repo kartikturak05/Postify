@@ -8,13 +8,13 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
 
     const [postInputs, setPostInputs] = useState<SignupInput>({
         name: "",
-        email: "", 
+        email: "",  
         password: ""
     });
     const [buttonText, setButtonText] = useState('Send');
 
     useEffect(() => {
-        setButtonText(type === "signup" ? "signup" : "signin");
+        setButtonText((type === "signup" ? "signup" : "signin"));
     }, []);
     
 
@@ -26,9 +26,8 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             const jwt = response.data;
             localStorage.setItem("token", jwt);
             navigate("/blogs");
-        } catch(e) {
-            alert("Error while signing up")
-            // alert the user here that the request failed
+        } catch(err) {
+            alert("Error while signing up.....")
         }
     }
 
@@ -63,9 +62,9 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                             password: e.target.value
                         })
                     }} />
-                    <button onClick={async()=>{
+                    <button onClick={()=>{
                         setButtonText(buttonText === type ? 'Loading...' : type);
-                        await sendRequest();
+                        sendRequest();
                     }} type="button" className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-4">{buttonText}</button>
                 </div>
             </div>

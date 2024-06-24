@@ -18,6 +18,19 @@ type User = {
     id: string;
 };
 
+function getFormattedDate(): string {
+    const date = new Date();
+    const day = date.getDate();
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+}
+
 
 blogRouter.use("/*", async (c, next) => {
     const Authheader = c.req.header("Authorization") || "";
@@ -41,6 +54,7 @@ blogRouter.use("/*", async (c, next) => {
 })
 
 blogRouter.post('/', async (c) => {
+    const date = getFormattedDate();
     const body = await c.req.json();
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -60,7 +74,9 @@ blogRouter.post('/', async (c) => {
             data: {
                 title: body.title,
                 content: body.content,
+                publishedDate:date,
                 authorId: userId
+
             }
         })
         return c.json({
@@ -118,6 +134,7 @@ blogRouter.get('/bulk', async (c) => {
                 content: true,
                 title: true,
                 id: true,
+                publishedDate:true,
                 author: {
                     select: {
                         name: true
@@ -150,6 +167,7 @@ blogRouter.get('/:id', async (c) => {
                 id: true,
                 title: true,
                 content: true,
+                publishedDate:true,
                 author: {
                     select: {
                         name: true

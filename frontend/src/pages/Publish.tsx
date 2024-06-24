@@ -27,8 +27,6 @@ export const Publish = () => {
                                 </div>
                                 <div className="flex items-center justify-between px-3 py-2 border-t ">
                                     <button onClick={async () => {
-                                        console.log("title = "+title)
-                                        console.log("content = "+content)
                                         const response = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
                                             title,
                                             content

@@ -6,6 +6,7 @@ export interface Blog{
     "content": string,
     "title": string,
     "id": string,
+    "publishedDate":string,
     "author": {
         "name": string
     }

@@ -39,7 +39,7 @@ export const Blogs = () => {
                 authorName={blog.author.name || "Anonymous"}
                     title={blog.title}
                     content={blog.content} 
-                    publishedData="3 june 2024"
+                    publishedDate={blog.publishedDate}
                     id={blog.id}>
                 </BlogCard>)}
                 
