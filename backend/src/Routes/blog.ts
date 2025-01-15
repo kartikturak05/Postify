@@ -34,11 +34,16 @@ function getFormattedDate(): string {
 
 blogRouter.use("/*", async (c, next) => {
     const Authheader = c.req.header("Authorization") || "";
+    console.log(Authheader);
     const token = Authheader;
+    console.log("secret "+c.env.JWT_SECRET)
     try {
         const user = await verify(token, c.env.JWT_SECRET) as User;
+        console.log("user"+user.id)
         if (user.id) {
             c.set("userId", user.id);
+        console.log("user1"+user.id)
+
             await next();
         } else {
             c.status(403);
@@ -177,6 +182,34 @@ blogRouter.get('/:id', async (c) => {
         })
         return c.json({
             response
+        })
+    } catch (err) {
+        c.status(403);
+        return c.json({ error: "Something went wrong !!" })
+    }
+})
+
+// fetch user details 
+blogRouter.post('/userdetails', async (c) => {
+    console.log("hello")
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    const userId = await c.get("userId");
+    console.log(userId)
+    console.log("adhfdshfdksjfhhhfkd")
+
+    try {
+        const respons = await prisma.user.findFirst({
+            where: {
+                id: userId
+            }, select: {
+                name: true,
+                email:true
+            }
+        })
+        return c.json({
+            respons
         })
     } catch (err) {
         c.status(403);
