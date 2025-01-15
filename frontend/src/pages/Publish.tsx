@@ -14,7 +14,7 @@ export const Publish = () => {
             <div className="flex justify-center pt-8">
                 <div className="max-w-screen-lg w-full">
                     <input onChange={async (e) => {
-                        await setTitle(e.target.value)
+                         setTitle(e.target.value)
                     }} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Title "></input>
                     <div>
                         <form>
@@ -22,7 +22,7 @@ export const Publish = () => {
                                 <div className="px-4 py-2 bg-white rounded-t-lg ">
             
                                     <textarea onChange={async(e)=>{
-                                        await setContent(e.target.value)
+                                         setContent(e.target.value)
                                     }} id="comment" rows={6} className="w-full px-0 text-sm text-gray-900 bg-white outline-none" placeholder="Write a content...." required ></textarea>
                                 </div>
                                 <div className="flex items-center justify-between px-3 py-2 border-t ">

@@ -4,7 +4,7 @@ import {  useUserDetails } from "../hooks"
 
 export const Appbar = () => {
   const { user } = useUserDetails();
-  console.log(user)
+  console.log('This is a user name ',user)
   return (
     <div className="border-b flex justify-between px-10 py-4">
       <Link to={"/blogs"} className="cursor-pointer text-2xl font-bold">
@@ -23,7 +23,7 @@ export const Appbar = () => {
             NEW
           </button>
         </Link><span onClick={() => console.log("hii button clicked")} className="cursor-pointer">
-        <Avatar name=""></Avatar>
+        <Avatar name="K"></Avatar>
         </span>
       </div>
     </div>
