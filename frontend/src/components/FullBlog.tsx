@@ -15,7 +15,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                             {blog.title}
                         </div>
                         <div className="text-slate-500 pt-2">
-                            Post on 4 june 2024
+                            {blog.publishedDate}
                         </div>
                         <div className="">
                             {blog.content}
@@ -27,14 +27,14 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         </div>
                         <div className="flex">
                             <div className="pr-4 flex flex-col justify-center">
-                            <Avatar name={blog.author.name || "Anonymous"}></Avatar>
+                            <Avatar name={blog.author.name || "Author"}></Avatar>
                             </div>
                             <div>
                                 <div className="text-xl font-bold">
-                                    {blog.author.name || "Anonymous"}
+                                    {blog.author.name || "Author"}
                                 </div>
                                 <div className="pt-1 text-slate-500">
-                                    Random catch to get users attention about the author
+                                    Information About the user
                                 </div>
                             </div>
                         </div>

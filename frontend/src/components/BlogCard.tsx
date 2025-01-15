@@ -17,7 +17,6 @@ export const BlogCard = ({
 }: BlogCardProps) => {
     return <>
         <Link to={`/blog/${id}`}>
-            {/* {console.log(id)} */}
             <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
                 <div className="flex">
                     <div className="">

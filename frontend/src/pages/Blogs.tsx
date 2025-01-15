@@ -32,9 +32,7 @@ export const Blogs = () => {
     return <>
         <Appbar></Appbar>
         <div className="flex justify-center">
-            {/* {console.log(blogs)} */}
             <div className="">
-                {/* {console.log(blogs)} */}
                 {blogs.map(blog => <BlogCard 
                 authorName={blog.author.name || "Anonymous"}
                     title={blog.title}

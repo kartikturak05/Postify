@@ -12,6 +12,11 @@ export interface Blog{
     }
 }
 
+export interface User{
+    "name":string,
+    "email":string
+}
+
 export const useBlog = ( {id} : { id : string })=>{
     const [loading,setLoading] = useState(true);
     const [blog,setBlog] = useState<Blog>();
@@ -51,5 +56,24 @@ export const useBlogs = () => {
     return {
         loading,
         blogs
+    }
+}
+
+export const useUserDetails =  ()=>{
+    const [user,setUser] = useState<User>();
+    useEffect(()=> {
+         axios.post(`${BACKEND_URL}/api/v1/blog/userdetails`,{
+            headers:{
+                Authorization:localStorage.getItem("token")
+            }
+        })
+        .then(response =>{
+            console.log("hello my dear")
+            console.log(response)
+            setUser(response.data);
+        })
+    },[])
+    return {
+        user
     }
 }
