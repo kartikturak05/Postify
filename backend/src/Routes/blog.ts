@@ -33,6 +33,8 @@ function getFormattedDate(): string {
 
 
 blogRouter.use("/*", async (c, next) => {
+    // extract the user id
+    // and passed it down to the route handler
     const Authheader = c.req.header("Authorization") || "";
     console.log(Authheader);
     const token = Authheader;
@@ -64,7 +66,7 @@ blogRouter.post('/', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
-    const userId = await c.get("userId");
+    const userId =  c.get("userId");
 
     const { success } = createBlogInputs.safeParse(body)
     if (!success) {
@@ -127,7 +129,7 @@ blogRouter.put('/', async (c) => {
 
 
 
-// Todo:add pagination
+// Todo:add pagination => show only first 10 blog then load more and
 blogRouter.get('/bulk', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -195,12 +197,12 @@ blogRouter.post('/userdetails', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
-    const userId = await c.get("userId");
+    const userId =  c.get("userId");
     console.log(userId)
     console.log("adhfdshfdksjfhhhfkd")
 
     try {
-        const respons = await prisma.user.findFirst({
+        const respons = await prisma.user.findUnique({
             where: {
                 id: userId
             }, select: {

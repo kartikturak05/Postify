@@ -62,7 +62,7 @@ export const useBlogs = () => {
 export const useUserDetails =  ()=>{
     const [user,setUser] = useState<User>();
     useEffect(()=> {
-         axios.post(`${BACKEND_URL}/api/v1/blog/userdetails`,{
+          axios.post(`${BACKEND_URL}/api/v1/blog/userdetails`,{
             headers:{
                 Authorization:localStorage.getItem("token")
             }
@@ -70,6 +70,7 @@ export const useUserDetails =  ()=>{
         .then(response =>{
             console.log("hello my dear")
             console.log(response)
+            console.log(localStorage.getItem("token"))
             setUser(response.data);
         })
     },[])
@@ -77,3 +78,41 @@ export const useUserDetails =  ()=>{
         user
     }
 }
+
+export interface MyUser{
+    id:string,
+    email:string,
+    name:string,
+    password:string
+}
+
+export const useMyDetails = () => {
+    const [user, setUser] = useState<MyUser | null>(null);
+  
+    useEffect(() => {
+      const fetchUserDetails = async () => {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/v1/user/UserDetails`, {
+            headers: {
+              Authorization: localStorage.getItem("token") || "",
+            },
+          });
+          setUser(response.data);
+      console.log("Response:", response.data);
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+
+        //   console.error("Error fetching user details:", error.response?.data || error.message);
+
+          // Optionally handle error state here
+        }
+      };
+  
+      fetchUserDetails();
+
+      
+
+    }, []);
+  
+    return { user };
+  };
