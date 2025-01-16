@@ -6,7 +6,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
     return <>
         <div>
             <div>
-                <Appbar></Appbar>
+                <Appbar onAvatarClick={()=> { }}></Appbar>
             </div>
             <div className="flex justify-center">
                 <div className="grid grid-cols-12 w-full px-10 pt-200 max-w-screen-xl pt-12">
@@ -14,14 +14,15 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                     <div className="col-span-4 mb-4 border-slate-700 ">
                         
                         <div className="flex">
-                            <div className="pr-4 flex flex-col justify-center">
+                            <div className="pr-4 flex flex-row justify-center items-center">
                             <Avatar name={blog.author.name || "Author"}></Avatar>
-                            </div>
                             <div>
-                                <div className="text-xl font-bold">
+                                <div className="text-2xl font-bold ml-5 mt-1">
                                     {blog.author.name || "Author"}
                                 </div>
                             </div>
+                            </div>
+                           
                         </div>
                     </div>
                         <div className=" col-span-8 text-5xl font-extrabold">

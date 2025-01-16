@@ -23,13 +23,13 @@ export const BlogCard = ({
 
                         <Avatar name={authorName}></Avatar>
                     </div>
-                    <div className="font-extralight pl-2 text-sm flex justify-center flex-col">
+                    <div className="font-extralight pl-2 text-sm flex justify-center flex-col mt-1">
                         {authorName}
                     </div>
-                    <div className="flex justify-center flex-col pl-2 ">
+                    <div className="flex justify-center flex-col pl-2 mt-1">
                         <Cirlce></Cirlce>
                     </div>
-                    <div className="pl-2 font-thin text-slate-400 text-sm flex justify-center flex-col">
+                    <div className="pl-2 font-thin text-slate-400 text-sm flex justify-center flex-col mt-1">
                         {publishedDate}
                     </div>
                 </div>

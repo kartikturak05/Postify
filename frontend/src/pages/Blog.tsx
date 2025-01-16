@@ -12,7 +12,7 @@ export const Blog = () =>{
 
     if(loading || !blog){
         return <div>
-        <Appbar></Appbar>
+        <Appbar onAvatarClick={()=> {}}></Appbar>
 
             <BlogSkeleton></BlogSkeleton>
         </div>

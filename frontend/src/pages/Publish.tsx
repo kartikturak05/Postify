@@ -10,7 +10,7 @@ export const Publish = () => {
     const navigate = useNavigate();
     return <>
         <div>
-            <Appbar></Appbar>
+            <Appbar onAvatarClick={()=> { }}></Appbar>
             <div className="flex justify-center pt-8">
                 <div className="max-w-screen-lg w-full">
                     <input onChange={async (e) => {
