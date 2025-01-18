@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CgProfile } from "react-icons/cg";
 import { ImBlogger } from "react-icons/im";

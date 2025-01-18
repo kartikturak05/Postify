@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@kartikturak05/medium-common": "^1.0.5",
+    "@tinymce/tinymce-react": "^5.1.1",
     "axios": "^1.7.2",
     "framer-motion": "^11.18.0",
     "react": "^18.2.0",

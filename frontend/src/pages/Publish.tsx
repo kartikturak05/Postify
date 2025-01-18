@@ -1,51 +1,131 @@
-import axios from "axios"
-import { Appbar } from "../components/Appbar"
-import { BACKEND_URL } from "../config"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import axios from "axios";
+import { Appbar } from "../components/Appbar";
+import { BACKEND_URL } from "../config";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Editor } from "@tinymce/tinymce-react";
 
 export const Publish = () => {
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const navigate = useNavigate();
-    return <>
-        <div>
-            <Appbar onAvatarClick={()=> { }}></Appbar>
-            <div className="flex justify-center pt-8">
-                <div className="max-w-screen-lg w-full">
-                    <input onChange={async (e) => {
-                         setTitle(e.target.value)
-                    }} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Title "></input>
-                    <div>
-                        <form>
-                            <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-4 ">
-                                <div className="px-4 py-2 bg-white rounded-t-lg ">
-            
-                                    <textarea onChange={async(e)=>{
-                                         setContent(e.target.value)
-                                    }} id="comment" rows={6} className="w-full px-0 text-sm text-gray-900 bg-white outline-none" placeholder="Write a content...." required ></textarea>
-                                </div>
-                                <div className="flex items-center justify-between px-3 py-2 border-t ">
-                                    <button onClick={async () => {
-                                        const response = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
-                                            title,
-                                            content
-                                        },{
-                                           headers:{
-                                                Authorization: localStorage.getItem("token")
-                                           } 
-                                        });
-                                        navigate(`/blog/${response.data.id}`)
-                                        }} type="button" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800">
-                                        Publish Post
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+  const [editorContent, setEditorContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
+  const navigate = useNavigate();
 
-                </div>
-            </div>
+  const handleEditorChange = (content:any) => {
+    setEditorContent(content);
+  };
+
+  const handlePublish = async () => {
+    try {
+      if (!title.trim() || !editorContent.trim()) {
+        alert("Please provide a title and content for your blog!");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", editorContent);
+      if (thumbnail) formData.append("thumbnail", thumbnail);
+
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/blog`,
+        formData,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      navigate(`/blog/${response.data.id}`);
+    } catch (error) {
+      console.error("Error publishing the post:", error);
+      alert("Failed to publish the post. Please try again.");
+    }
+  };
+
+  return (
+    <div>
+      <Appbar onAvatarClick={() => {}} />
+      <div className="flex justify-center pt-8 bg-gray-50 min-h-screen">
+        <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
+          {/* Title Section */}
+          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+            Create a New Blog Post
+          </h1>
+
+          <label
+            htmlFor="title"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
+            Blog Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            placeholder="Enter your blog title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Thumbnail Upload */}
+          <label
+            htmlFor="thumbnail"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
+            Blog Thumbnail
+          </label>
+          <div className="flex items-center gap-4 mb-6">
+            <input
+              type="file"
+              id="thumbnail"
+              accept="image/*"
+              // onChange={(e) => setThumbnail(e.target.files[0])}
+              className="block w-full border border-gray-300 rounded-lg p-3 text-gray-500"
+            />
+          </div>
+
+          {/* Rich Text Editor */}
+          <label
+            htmlFor="content"
+            className="block text-lg font-semibold text-gray-700 mb-2"
+          >
+            Blog Content
+          </label>
+          <div className="mb-6">
+            <Editor
+              apiKey="ja7b5my29cbrlgq30hd7i5yqkxyb26pna8wcxf5y4ty2s51t"
+              initialValue=""
+              init={{
+                height: 400,
+                menubar: false,
+                plugins: [
+                  "link",
+                  "lists",
+                  "autolink",
+                  "preview",
+                  "wordcount",
+                ],
+                toolbar:
+                  "undo redo | bold italic underline | bullist numlist | link | preview",
+              }}
+              onEditorChange={handleEditorChange}
+            />
+          </div>
+
+          {/* Publish Button */}
+          <div className="text-center">
+            <button
+              onClick={handlePublish}
+              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Publish Post
+            </button>
+          </div>
         </div>
-    </>
-}
+      </div>
+    </div>
+  );
+};
