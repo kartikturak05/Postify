@@ -31,9 +31,8 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         <div className="text-slate-500 pt-2">
                             {blog.publishedDate}
                         </div>
-                        <div className="">
-                            {blog.content}
-                        </div>
+                        <div className=""
+                           dangerouslySetInnerHTML={{ __html: blog.content }} />
                     </div>
                     
                 </div>

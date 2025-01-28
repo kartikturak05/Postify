@@ -5,13 +5,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 
+
 export const Publish = () => {
   const [editorContent, setEditorContent] = useState("");
   const [title, setTitle] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const navigate = useNavigate();
 
-  const handleEditorChange = (content:any) => {
+  const handleEditorChange = (content: any) => {
     setEditorContent(content);
   };
 
@@ -22,18 +23,16 @@ export const Publish = () => {
         return;
       }
 
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("content", editorContent);
-      if (thumbnail) formData.append("thumbnail", thumbnail);
-
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/blog`,
-        formData,
+        {
+          title: title,
+          content: editorContent,
+          ThumbnailLink: thumbnail,
+        },
         {
           headers: {
             Authorization: localStorage.getItem("token"),
-            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -101,13 +100,7 @@ export const Publish = () => {
               init={{
                 height: 400,
                 menubar: false,
-                plugins: [
-                  "link",
-                  "lists",
-                  "autolink",
-                  "preview",
-                  "wordcount",
-                ],
+                plugins: ["link", "lists", "autolink", "preview", "wordcount"],
                 toolbar:
                   "undo redo | bold italic underline | bullist numlist | link | preview",
               }}

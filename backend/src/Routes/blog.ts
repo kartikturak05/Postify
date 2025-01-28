@@ -4,15 +4,21 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { verify } from "hono/jwt";
 import { createBlogInputs, updateBlogInputs } from "@kartikturak05/medium-common";
 
+
+
 export const blogRouter = new Hono<{
     Bindings: {
         DATABASE_URL: string;
         JWT_SECRET: string;
+        CLOUDNARY_API_SECRET:string;
+        CLOUDNARY_CLOUD_Name:string;
+        CLOUDNARY_API_KEY:string;
     },
     Variables: {
         userId: string;
     };
 }>();
+
 
 type User = {
     id: string;
@@ -60,13 +66,21 @@ blogRouter.use("/*", async (c, next) => {
     }
 })
 
+
+
 blogRouter.post('/', async (c) => {
+
+    
+
     const date = getFormattedDate();
     const body = await c.req.json();
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
     const userId =  c.get("userId");
+
+
+
 
     const { success } = createBlogInputs.safeParse(body)
     if (!success) {
@@ -81,6 +95,7 @@ blogRouter.post('/', async (c) => {
             data: {
                 title: body.title,
                 content: body.content,
+                ThumbnailLink: body.thumbnail,
                 publishedDate:date,
                 authorId: userId
 
