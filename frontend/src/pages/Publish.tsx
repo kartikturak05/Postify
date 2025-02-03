@@ -5,11 +5,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 
-
 export const Publish = () => {
   const [editorContent, setEditorContent] = useState("");
   const [title, setTitle] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
   const navigate = useNavigate();
 
   const handleEditorChange = (content: any) => {
@@ -23,12 +23,37 @@ export const Publish = () => {
         return;
       }
 
+      // **1. Upload Image to the Server**
+
+      const formData = new FormData();
+      if (thumbnail) {
+        formData.append("image", thumbnail); // Make sure this key matches the backend
+      }
+
+      // request to upload file to imgBB server
+      if (thumbnail) {
+        const imageResponse = await fetch(
+          "https://api.imgbb.com/1/upload?key=4edf778307ae73cbfec32d47e9c6ebb9",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+      
+
+      const imageData = await imageResponse.json();
+      const uploadedImageUrl = imageData.data.url; // ✅ Get the URL directly
+      setThumbnailUrl(uploadedImageUrl);
+      console.log("Uploaded Image URL:", uploadedImageUrl);
+
+      // send the image url and other data to the backend database and server
       const response = await axios.post(
+        
         `${BACKEND_URL}/api/v1/blog`,
         {
           title: title,
           content: editorContent,
-          ThumbnailLink: thumbnail,
+          thumbnail: uploadedImageUrl,
         },
         {
           headers: {
@@ -38,6 +63,7 @@ export const Publish = () => {
       );
 
       navigate(`/blog/${response.data.id}`);
+      }
     } catch (error) {
       console.error("Error publishing the post:", error);
       alert("Failed to publish the post. Please try again.");
@@ -79,9 +105,13 @@ export const Publish = () => {
           <div className="flex items-center gap-4 mb-6">
             <input
               type="file"
-              id="thumbnail"
+              id="image"
               accept="image/*"
-              // onChange={(e) => setThumbnail(e.target.files[0])}
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  setThumbnail(e.target.files[0]);
+                }
+              }}
               className="block w-full border border-gray-300 rounded-lg p-3 text-gray-500"
             />
           </div>
