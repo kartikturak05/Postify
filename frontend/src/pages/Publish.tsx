@@ -123,7 +123,7 @@ export const Publish = () => {
           </label>
           <div className="mb-6">
             <Editor
-              apiKey="ja7b5my29cbrlgq30hd7i5yqkxyb26pna8wcxf5y4ty2s51t"
+              apiKey="nx5yz9801516ctk8lmn7rq43lvutt49g8bmxpo3c6lpad5p4"
               initialValue=""
               init={{
                 height: 400,
