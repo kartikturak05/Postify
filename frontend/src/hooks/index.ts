@@ -7,6 +7,7 @@ export interface Blog{
     "title": string,
     "id": string,
     "publishedDate":string,
+    "ThumbnailLink":string,
     "author": {
         "name": string
     }

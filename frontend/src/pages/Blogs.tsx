@@ -31,7 +31,7 @@ export const Blogs = () => {
   return (
     <>
       <Appbar onAvatarClick={toggleSidebar} />
-      <div className="grid md:grid-cols-3 grid-rows-1">
+      <div className="grid md:grid-cols-4 grid-rows-1">
         {/* Sidebar */}
         <div>
 
@@ -47,6 +47,7 @@ export const Blogs = () => {
               title={blog.title}
               content={blog.content}
               publishedDate={blog.publishedDate}
+              ThumbnailLink={blog.ThumbnailLink}
               id={blog.id}
             />
           ))}

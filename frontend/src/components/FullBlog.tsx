@@ -28,10 +28,13 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         <div className=" col-span-8 text-5xl font-extrabold">
                             {blog.title}
                         </div>
-                        <div className="text-slate-500 pt-2">
+                        <div className="text-slate-500 pt-2 mb-4">
                             {blog.publishedDate}
                         </div>
-                        <div className=""
+                        <div className="h-auto w-full bg-gray-100 rounded-lg flex items-center justify-between">
+                            <img src={blog.ThumbnailLink} alt="blog" className="h-full w-full object-contains rounded-lg o" />
+                        </div>
+                        <div className="mt-10"
                            dangerouslySetInnerHTML={{ __html: blog.content }} />
                     </div>
                     
