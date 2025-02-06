@@ -9,7 +9,6 @@ export const Publish = () => {
   const [editorContent, setEditorContent] = useState("");
   const [title, setTitle] = useState("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
   const navigate = useNavigate();
 
   const handleEditorChange = (content: any) => {
@@ -43,7 +42,6 @@ export const Publish = () => {
 
       const imageData = await imageResponse.json();
       const uploadedImageUrl = imageData.data.url; // ✅ Get the URL directly
-      setThumbnailUrl(uploadedImageUrl);
       console.log("Uploaded Image URL:", uploadedImageUrl);
 
       // send the image url and other data to the backend database and server
