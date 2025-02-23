@@ -19,7 +19,7 @@ export const BlogCard = ({
 }: BlogCardProps) => {
   return (
     <Link to={`/blog/${id}`}>
-      <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
+      <div className="pt-4 border-b border-slate-200 pb-4 md:w-screen sm:max-w-screen-md cursor-pointer hover:shadow-lg hover:shadow-fgray-800 hover:scale-105 transform transition duration-200 ease-in-out">
         <div className="h-48 w-full bg-gray-100 rounded-lg flex items-center justify-between pl-5 pr-5 pt-3 pb-1">
           {/* Left Content */}
           <div className="flex-grow min-w-0">
@@ -30,7 +30,7 @@ export const BlogCard = ({
             </div>
             <div className="text-xl font-semibold py-2 truncate">{title}</div>
             <div
-              className="text-md font-thin max-w-[350px] truncate"
+              className="text-md font-thin md:w-[30px] w-[10px] truncate mr-2"
               dangerouslySetInnerHTML={{
                 __html: content.slice(0, 100) + "...",
               }}
@@ -40,11 +40,11 @@ export const BlogCard = ({
             </div>
           </div>
           {/* Right Thumbnail */}
-          <div className="w-48 h-40 flex-shrink-0">
+          <div className="md:w-48 md:h-40 sm:w-2 sm:h-2 flex-shrink-0">
             <img
               src={ThumbnailLink}
               alt="blog"
-              className="w-full h-full object-cover rounded-lg shadow-md"
+              className="w-28 h-28 md:w-full md:h-full object-cover rounded-lg shadow-md"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ export function Avatar({ name }: { name: string }) {
   return (
     <div className="relative inline-flex items-center text-center justify-center w-8 h-8 mt-3 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
       <span className="font-xs text-gray-600 dark:text-gray-300 font-semibold">
-        {name[0]}
+        {name[0].toUpperCase()}
       </span>
     </div>
   );

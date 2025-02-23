@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Appbar } from "../components/Appbar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import UserProfileSidebar from "../components/UserProfileSidebar";
@@ -16,7 +15,6 @@ export const Blogs = () => {
   if (loading) {
     return (
       <div>
-        <Appbar onAvatarClick={toggleSidebar} />
         <div className="flex justify-center">
           <div>
             {Array.from({ length: 10 }).map((_, index) => (
@@ -30,7 +28,6 @@ export const Blogs = () => {
 
   return (
     <>
-      <Appbar onAvatarClick={toggleSidebar} />
       <div className="grid md:grid-cols-4 grid-rows-1">
         {/* Sidebar */}
         <div>

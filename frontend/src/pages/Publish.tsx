@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Appbar } from "../components/Appbar";
 import { BACKEND_URL } from "../config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,7 +69,6 @@ export const Publish = () => {
 
   return (
     <div>
-      <Appbar onAvatarClick={() => {}} />
       <div className="flex justify-center pt-8 bg-gray-50 min-h-screen">
         <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8">
           {/* Title Section */}

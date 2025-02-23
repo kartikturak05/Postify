@@ -99,7 +99,7 @@ export const useMyDetails = () => {
             },
           });
           setUser(response.data);
-      console.log("Response:", response.data);
+    //   console.log("Response:", response.data);
         } catch (error) {
           console.error("Error fetching user details:", error);
 

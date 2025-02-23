@@ -1,4 +1,3 @@
-import { Appbar } from "../components/Appbar";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { FullBlog } from "../components/FullBlog";
 import {  useBlog } from "../hooks"
@@ -12,7 +11,6 @@ export const Blog = () =>{
 
     if(loading || !blog){
         return <div>
-        <Appbar onAvatarClick={()=> {}}></Appbar>
 
             <BlogSkeleton></BlogSkeleton>
         </div>

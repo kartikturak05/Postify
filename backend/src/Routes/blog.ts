@@ -70,9 +70,6 @@ blogRouter.use("/*", async (c, next) => {
 
 
 blogRouter.post('/', async (c) => {
-
-    
-
     const date = getFormattedDate();
     const body = await c.req.json();
     const prisma = new PrismaClient({
@@ -236,3 +233,81 @@ blogRouter.post('/userdetails', async (c) => {
         return c.json({ error: "Something went wrong !!" })
     }
 })
+
+// blogs for only specific user
+blogRouter.get('/user/blogs', async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const userId = c.req.query("userId"); // Extract userId from query parameters
+
+    if (!userId) {
+        c.status(400);
+        return c.json({ error: "User ID is required" });
+    }
+
+    try {
+        const userBlogs = await prisma.post.findMany({
+            where: {
+                authorId: userId
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                publishedDate: true,
+                ThumbnailLink: true
+            }
+        });
+
+        return c.json({
+            blogs: userBlogs
+        });
+    } catch (err) {
+        c.status(500);
+        return c.json({ error: "Something went wrong while fetching blogs" });
+    }
+});
+
+// delete the blog of from blog id
+
+blogRouter.delete('/:id', async (c) => {
+    const blogId = c.req.param("id");
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const userId = c.get("userId"); // Get user ID from middleware
+
+    try {
+        // Check if the blog exists and belongs to the user
+        const blog = await prisma.post.findUnique({
+            where: { id: blogId },
+            select: { authorId: true }
+        });
+
+        if (!blog) {
+            c.status(404);
+            return c.json({ error: "Blog not found" });
+        }
+
+        if (blog.authorId !== userId) {
+            c.status(403);
+            return c.json({ error: "You are not authorized to delete this blog" });
+        }
+
+        // Delete the blog
+        await prisma.post.delete({
+            where: { id: blogId }
+        });
+
+        return c.json({ message: "Blog deleted successfully" });
+
+    } catch (err) {
+        console.error("Error deleting blog:", err);
+        c.status(500);
+        return c.json({ error: "Something went wrong while deleting the blog" });
+    }
+});
+
