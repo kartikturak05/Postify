@@ -5,11 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-// Define types for user and blog objects
-interface User {
-  id: string;
-  name: string;
-}
+
 
 interface Blog {
   id: string;
