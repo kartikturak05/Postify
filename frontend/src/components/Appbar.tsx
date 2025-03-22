@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { Avatar } from "./BlogCard";
 import { useMyDetails } from "../hooks";
 import { ImBlogger } from "react-icons/im";
+import useBlogStore from "../Store";
 
 export const Appbar = () => {
   const { user: MyUser } = useMyDetails() || { user: "U" };
+  const { searchQuery, setSearchQuery } = useBlogStore();
 
   return (
-    <div className="border-b flex justify-between items-center px-6 py-4 bg-gray-900 text-white shadow-md pl-10 pr-10">
+    <div className={`border-b flex justify-between items-center px-6 py-4 bg-gray-900 text-white shadow-md pl-10 pr-10 ${localStorage.getItem("token") === null ? "hidden" : "flex"}`}>
       {/* Left Section - Logo & Search Bar */}
       <div className="flex items-center space-x-6">
         <Link to={"/blogs"} className="text-2xl font-bold hover:text-gray-300 transition">
@@ -18,6 +20,8 @@ export const Appbar = () => {
             type="text"
             placeholder="Search..."
             className="border border-gray-600 bg-gray-800 rounded-full px-4 py-2 text-white w-56 focus:ring focus:ring-green-500 focus:outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>

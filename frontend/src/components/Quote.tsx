@@ -1,19 +1,17 @@
-
-export const Quote = ()=>{
-    return <div className="bg-slate-200 h-screen flex justify-center flex-col ">
-        <div className="flex justify-center">
-            <div className="max-w-lg">
-            <div className=" text-3xl font-bold">
-                "The customer support I received was exceptional. The support team went above and beyond to address my concerns."
+export const Quote = () => {
+    return (
+        <div className="bg-slate-200 h-screen flex justify-center items-center">
+            <div className="max-w-lg text-center px-6">
+                <div className="text-3xl font-bold">
+                    "Joining our platform was the best decision I made. The seamless experience and support helped me grow effortlessly."
+                </div>
+                <div className="text-xl font-semibold mt-4">
+                    Alex Johnson
+                </div>
+                <div className="text-sm font-light text-slate-500">
+                    Founder | Visionary Tech
+                </div>
             </div>
-            <div className="max-w-md text-xl font-semibold">
-            Julies Winfield
         </div>
-        <div className="max-w-md text-sm font-light text-slate-400">
-            CEO | Acne corp
-        </div>
-            </div>
-        </div>
-        
-    </div>
-}
+    );
+};
