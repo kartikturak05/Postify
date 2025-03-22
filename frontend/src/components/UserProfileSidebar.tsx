@@ -4,6 +4,7 @@ import { FaBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 
+
 const UserProfileSidebar = ({ isOpen }: { isOpen: boolean }) => {
   return (
     <AnimatePresence>
@@ -44,3 +45,5 @@ const UserProfileSidebar = ({ isOpen }: { isOpen: boolean }) => {
 };
 
 export default UserProfileSidebar;
+
+
