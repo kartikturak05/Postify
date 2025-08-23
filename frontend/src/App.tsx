@@ -9,6 +9,7 @@ import UserProfile from "./pages/UserProfile";
 import { Appbar } from "./components/Appbar";
 import { useEffect, useState } from "react";
 import MobileNavbar from "./components/MobileNavbar";
+import Footer from "./components/Footer";
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -44,6 +45,7 @@ function App() {
           <Route path="/blog/profile" element={<UserProfile />} />
           <Route path="/publish" element={<Publish />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );
