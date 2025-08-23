@@ -3,17 +3,36 @@ import { Avatar } from "./BlogCard";
 import { useMyDetails } from "../hooks";
 import { ImBlogger } from "react-icons/im";
 import useBlogStore from "../Store";
+// import { useEffect, useState } from "react";
+import useAuthStore from "../Store/authStore";
 
 export const Appbar = () => {
+  const { isAuthenticated, logout } = useAuthStore();
   const { user: MyUser } = useMyDetails() || { user: "U" };
   const { searchQuery, setSearchQuery } = useBlogStore();
 
+  // state to control rendering
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setIsAuthenticated(true);
+  //   }
+  // }, []);
+
+  // if not authenticated, return null (don’t render anything)
+  if (!isAuthenticated) return null;
+
   return (
-    <div className={`border-b flex justify-between items-center px-6 py-4 bg-gray-900 text-white shadow-md pl-10 pr-10 ${localStorage.getItem("token") === null ? "hidden" : "flex"}`}>
+    <div className="border-b flex justify-between items-center px-6 py-4 bg-gray-900 text-white shadow-md pl-10 pr-10">
       {/* Left Section - Logo & Search Bar */}
       <div className="flex items-center space-x-6">
-        <Link to={"/blogs"} className="text-2xl font-bold hover:text-gray-300 transition">
-        Postify 
+        <Link
+          to={"/blogs"}
+          className="text-2xl font-bold hover:text-gray-300 transition"
+        >
+          Postify
         </Link>
         <div className="relative hidden sm:block">
           <input
@@ -30,7 +49,7 @@ export const Appbar = () => {
       <div className="flex items-center space-x-4">
         <Link to={"/"}>
           <button
-            onClick={() => localStorage.removeItem("token")}
+            onClick={logout}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition"
           >
             Logout
@@ -41,7 +60,10 @@ export const Appbar = () => {
             NEW
           </button>
         </Link>
-        <Link to={`/blog/Profile`} className="flex items-center space-x-2 hover:text-gray-400 transition">
+        <Link
+          to={`/blog/Profile`}
+          className="flex items-center space-x-2 hover:text-gray-400 transition"
+        >
           <ImBlogger className="text-lg" />
           <span className="text-lg font-medium">My Blogs</span>
         </Link>

@@ -3,8 +3,10 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { SignupInput } from "@kartikturak05/medium-common";
 import  axios from "axios";
 import { BACKEND_URL } from "../config";
+import useAuthStore from "../Store/authStore";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
+    const { login } = useAuthStore();
 
     const [postInputs, setPostInputs] = useState<SignupInput>({
         name: "",
@@ -24,7 +26,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         try {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
             const jwt = response.data;
-            localStorage.setItem("token", jwt);
+              login(jwt);
             navigate("/blogs");
         } catch(err) {
             alert("Error while signing up.....")

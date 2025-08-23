@@ -3,7 +3,9 @@ import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../hooks";
 import useBlogStore from "../Store";
 
-export const Blogs = () => {
+import React from "react";
+
+export const Blogs: React.FC = () => {
   const { loading, blogs } = useBlogs();
   
 
@@ -29,58 +31,34 @@ export const Blogs = () => {
     );
   }
 
-  return (
-    <>
-      <div className="container mx-auto md:pt-10 pt-20">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Sidebar - Hidden on mobile, visible on larger screens */}
-          {/* <div className="hidden lg:block lg:col-span-1">
-          <UserProfileSidebar isOpen={true} />
-        </div> */}
-
-          {/* Mobile sidebar - only visible when isSidebarOpen is true */}
-          {/* {isSidebarOpen && (
-            <div className="fixed inset-0 z-50 lg:hidden">
-              <div
-                className="absolute inset-0 bg-black bg-opacity-50"
-                onClick={() => setIsSidebarOpen(false)}
-              ></div>
-              <div className="absolute left-0 top-0 h-full w-64 bg-white shadow-lg">
-                <UserProfileSidebar isOpen={isSidebarOpen} />
-              </div>
-            </div>
-          )} */}
-
-          {/* Blog content section - full width on mobile, 3/4 width on desktop */}
-          <div className="col-span-1 lg:col-span-3">
-            {/* Blog cards grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredBlogs.length === 0 ? (
-                <p className="text-gray-800 text-center text-3xl ">No blogs found.</p>
-              ) : (
-                filteredBlogs.map((blog) => (
-                  <BlogCard
-                    key={blog.id}
-                    authorName={blog.author?.name || "Anonymous"}
-                    title={blog.title}
-                    content={blog.content}
-                    publishedDate={blog.publishedDate}
-                    ThumbnailLink={blog.ThumbnailLink} // Fixed property name
-                    id={blog.id}
-                  />
-                ))
-              )}
-            </div>
-
-            {/* Empty state when no blogs */}
-            {blogs.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-gray-500">No blogs found</p>
-              </div>
+return (
+  <>
+    <div className="container mx-auto md:pt-10 pt-20 px-4 md:px-6 lg:px-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="col-span-1 lg:col-span-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredBlogs.length === 0 ? (
+              <p className="text-gray-800 text-center text-3xl">
+                No blogs found.
+              </p>
+            ) : (
+              filteredBlogs.map((blog) => (
+                <BlogCard
+                  key={blog.id}
+                  authorName={blog.author?.name || "Anonymous"}
+                  title={blog.title}
+                  content={blog.content}
+                  publishedDate={blog.publishedDate}
+                  ThumbnailLink={blog.ThumbnailLink}
+                  id={blog.id}
+                />
+              ))
             )}
-          </div>
+          {/* Remove duplicate "No blogs found" message since it's already handled above */}
+            </div>
         </div>
       </div>
-    </>
+    </div>
+  </>
   );
-};
+}
