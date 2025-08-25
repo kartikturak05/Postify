@@ -78,8 +78,6 @@ blogRouter.post('/', async (c) => {
     const userId =  c.get("userId");
 
 
-
-
     const { success } = createBlogInputs.safeParse(body)
     if (!success) {
         c.status(411);
@@ -128,7 +126,8 @@ blogRouter.put('/', async (c) => {
             },
             data: {
                 title: body.title,
-                content: body.content
+                content: body.content,
+                ThumbnailLink: body.thumbnail,
             }
         })
         return c.json({

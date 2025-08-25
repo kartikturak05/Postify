@@ -5,8 +5,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-
-
 interface Blog {
   id: string;
   title: string;
@@ -20,10 +18,11 @@ const UserProfile = () => {
     user: { id: "", name: "Guest" },
   };
   const [userBlogs, setUserBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserBlogs = async () => {
-      if (!MyUser?.id) return; // Prevent fetching if user ID is not available
+      if (!MyUser?.id) return;
       console.log("Fetching user blogs...");
 
       try {
@@ -45,6 +44,8 @@ const UserProfile = () => {
         }
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -52,6 +53,10 @@ const UserProfile = () => {
   }, [MyUser?.id]);
 
   const handleDelete = async (blogId: string) => {
+    if (!window.confirm("Are you sure you want to delete this blog?")) {
+      return;
+    }
+
     try {
       const response = await axios.delete(
         `${BACKEND_URL}/api/v1/blog/${blogId}`,
@@ -67,9 +72,11 @@ const UserProfile = () => {
         setUserBlogs((prev) => prev.filter((blog) => blog.id !== blogId));
       } else {
         console.error("Error deleting blog:", response.data.error);
+        toast.error("Failed to delete blog");
       }
     } catch (error) {
       console.error("Failed to delete blog:", error);
+      toast.error("Failed to delete blog");
     }
   };
 
@@ -82,20 +89,22 @@ const UserProfile = () => {
 
       <div className="p-6">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">Your Blogs</h3>
-        {userBlogs.length > 0 ? (
+        {loading ? (
+          <p className="text-gray-500 text-xl">Loading.....</p>
+        ) : userBlogs.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-10">
             {userBlogs.map((blog) => (
               <div
                 key={blog.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 max-h-96 h-full"
+                className="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-105 max-h-96 h-full flex flex-col"
               >
-                <Link to={`/blog/${blog.id}`}>
+                <Link to={`/blog/${blog.id}`} className="flex-grow">
                   <img
                     src={blog.ThumbnailLink}
                     alt={blog.title}
-                    className="w-full h-40 object-cover "
+                    className="w-full h-40 object-cover"
                   />
-                  <div className="p-4">
+                  <div className="p-4 flex-grow">
                     <h4 className="text-lg font-bold text-gray-900">
                       {blog.title}
                     </h4>
@@ -107,9 +116,15 @@ const UserProfile = () => {
                     ></div>
                   </div>
                 </Link>
-                <div className="p-4 flex justify-end">
+                <div className="p-4 flex justify-between gap-2">
+                  <Link
+                    to={`/update-blog/${blog.id}`}
+                    className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 text-sm transition-colors"
+                  >
+                    Edit
+                  </Link>
                   <button
-                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm transition-colors"
                     onClick={() => handleDelete(blog.id)}
                   >
                     Delete
@@ -119,7 +134,15 @@ const UserProfile = () => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500 text-xl ">Loading.....</p>
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-xl mb-4">No blogs found</p>
+            <Link
+              to="/publish"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Create Your First Blog
+            </Link>
+          </div>
         )}
       </div>
     </div>

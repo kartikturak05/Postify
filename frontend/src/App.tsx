@@ -10,6 +10,9 @@ import { Appbar } from "./components/Appbar";
 import { useEffect, useState } from "react";
 import MobileNavbar from "./components/MobileNavbar";
 import Footer from "./components/Footer";
+import { UpdateBlog } from "./pages/UpdateBlog";   // ✅ added from first one
+import { ToastContainer } from "react-toastify";   // ✅ added from first one
+import "react-toastify/dist/ReactToastify.css";    // ✅ added from first one
 
 function App() {
   const [isMobile, setIsMobile] = useState(false);
@@ -42,11 +45,26 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog/:id" element={<Blog />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blog/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile />} />
           <Route path="/publish" element={<Publish />} />
+          <Route path="/publish" element={<Publish />} />
+          <Route path="/update-blog/:id" element={<UpdateBlog />} />  {/* ✅ added */}
         </Routes>
         <Footer />
       </BrowserRouter>
+
+      {/* ✅ Toast container added */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

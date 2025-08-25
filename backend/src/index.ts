@@ -4,9 +4,6 @@ import { sign, verify } from 'hono/jwt'
 import { userRouter } from './Routes/user'
 import {blogRouter} from './Routes/blog'
 import { cors } from 'hono/cors'
-
-
-
 import { Hono } from 'hono'
 
 
@@ -20,7 +17,7 @@ app.use('api/*',cors());
 app.route("/api/v1/user",userRouter);
 app.route("/api/v1/blog",blogRouter);
 
-app.use('/api/v1/blog/*', async (c, next) => {
+app.use('/api/v1/blog/*', async (c:any, next:any) => {
   
   // Bearer token => ["Bearer","token"];
 

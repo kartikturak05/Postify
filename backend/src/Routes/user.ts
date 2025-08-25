@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { sign, verify } from "hono/jwt";
-import { PrismaClient, User } from "@prisma/client/edge";
+import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { signupInput, signinInput } from "@kartikturak05/medium-common";
 
@@ -22,7 +22,7 @@ userRouter.use("/UserDetails", async (c, next) => {
     const token = Authheader;
     console.log("secret "+c.env.JWT_SECRET)
     try {
-        const user = await verify(token, c.env.JWT_SECRET) as User;
+        const user = await verify(token, c.env.JWT_SECRET) as { id?: string };
         console.log("user"+user.id)
         if (user.id) {
             c.set("userId", user.id);
