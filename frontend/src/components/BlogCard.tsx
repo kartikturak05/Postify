@@ -57,9 +57,10 @@ export const BlogCard = ({
             <h2 className="text-xl font-semibold mb-2 line-clamp-2">{title}</h2>
 
             {/* Content preview */}
-            <div className="text-gray-600 mb-3 line-clamp-3">
-              {content.slice(0, 150)}...
-            </div>
+            <div
+              className="text-gray-600 mb-3 line-clamp-3"
+              dangerouslySetInnerHTML={{ __html: content.slice(0, 150) + "..." }}
+            />
 
             {/* Reading time */}
             <div className="text-xs text-gray-500">

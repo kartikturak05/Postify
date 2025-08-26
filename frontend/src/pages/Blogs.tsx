@@ -12,10 +12,10 @@ export const Blogs: React.FC = () => {
   const { searchQuery } = useBlogStore();
 
   const filteredBlogs = blogs
-    .filter((blog) =>
-      blog.title.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => a.publishedDate.localeCompare(b.publishedDate)); // Sort alphabetically
+  .filter((blog) =>
+    blog.title.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()); // latest first
 
   if (loading) {
     return (

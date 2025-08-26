@@ -16,7 +16,7 @@ export const Home=()=>{
 
 const Header = () => (
     <div className="mb-4">
-    <div className="text-4xl font-bold text-blue-500 mb-4">Medium</div>
+    <div className="text-4xl font-bold text-blue-500 mb-4">Postify</div>
     <h1 className="text-4xl font-bold">Stay curious.</h1>
   </div>
   );

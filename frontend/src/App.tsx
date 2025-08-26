@@ -45,15 +45,14 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog/:id" element={<Blog />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/blog/profile" element={<UserProfile />} />
           <Route path="/publish" element={<Publish />} />
           <Route path="/publish" element={<Publish />} />
-          <Route path="/update-blog/:id" element={<UpdateBlog />} />  {/* ✅ added */}
+          <Route path="/update-blog/:id" element={<UpdateBlog />} /> 
         </Routes>
         <Footer />
       </BrowserRouter>
 
-      {/* ✅ Toast container added */}
       <ToastContainer
         position="top-right"
         autoClose={3000}

@@ -4,6 +4,7 @@ import { SignupInput } from "@kartikturak05/medium-common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import useAuthStore from "../Store/authStore";
+import { toast } from "react-toastify";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     const { login } = useAuthStore();
@@ -16,7 +17,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     });
     const [buttonText, setButtonText] = useState('Send');
 
-    // ✅ Redirect if already logged in
+    //  Redirect if already logged in
     useEffect(() => {
         if (localStorage.getItem("token")) {
             navigate("/blogs");
@@ -32,9 +33,10 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             );
             const jwt = response.data;
             login(jwt); // save token in store/localStorage
+            toast.success("Successfully Signed In");
             navigate("/blogs");
         } catch (err) {
-            alert("Error while signing up.....");
+            toast.error("Error While Signing In");
         }
     }
 
@@ -85,9 +87,11 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                             }
                         />
                         <button
-                            onClick={() => {
+                            onClick={async () => {
                                 setButtonText(buttonText === type ? "Loading..." : type);
-                                sendRequest();
+                                await sendRequest();
+                                setButtonText(type === "signup" ? "signup" : "signin");
+
                             }}
                             type="button"
                             className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4"

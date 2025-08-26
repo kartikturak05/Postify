@@ -3,6 +3,7 @@ import { BACKEND_URL } from "../config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
+import { toast } from "react-toastify";
 
 export const Publish = () => {
   const [editorContent, setEditorContent] = useState("");
@@ -58,12 +59,12 @@ export const Publish = () => {
           },
         }
       );
-
+      toast.success("Blog published successfully!");
       navigate(`/blog/${response.data.id}`);
       }
     } catch (error) {
       console.error("Error publishing the post:", error);
-      alert("Failed to publish the post. Please try again.");
+      toast.error("Failed to publish the post. Please try again.");
     }
   };
 
